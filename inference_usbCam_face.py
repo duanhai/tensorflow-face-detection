@@ -93,20 +93,21 @@ example:
 
     tDetector = TensoflowFaceDector(PATH_TO_CKPT)
 
-    cap = cv2.VideoCapture(camID)
+    # cap = cv2.VideoCapture(camID)
     windowNotSet = True
-    while True:
-        ret, image = cap.read()
-        if ret == 0:
-            break
+    # while True:
+        # ret, image = cap.read()
+        # if ret == 0:
+        #     break
 
-        [h, w] = image.shape[:2]
-        print h, w
-        image = cv2.flip(image, 1)
+        # print h, w
+        # image = cv2.flip(image, 1)
+    image = cv2.imread('./model/test.jpg')
+    [h, w] = image.shape[:2]
 
-        (boxes, scores, classes, num_detections) = tDetector.run(image)
+    (boxes, scores, classes, num_detections) = tDetector.run(image)
 
-        vis_util.visualize_boxes_and_labels_on_image_array(
+    vis_util.visualize_boxes_and_labels_on_image_array(
             image,
             np.squeeze(boxes),
             np.squeeze(classes).astype(np.int32),
@@ -115,13 +116,13 @@ example:
             use_normalized_coordinates=True,
             line_thickness=4)
 
-        if windowNotSet is True:
-            cv2.namedWindow("tensorflow based (%d, %d)" % (w, h), cv2.WINDOW_NORMAL)
-            windowNotSet = False
+    if windowNotSet is True:
+        cv2.namedWindow("tensorflow based (%d, %d)" % (w, h), cv2.WINDOW_NORMAL)
+        windowNotSet = False
 
-        cv2.imshow("tensorflow based (%d, %d)" % (w, h), image)
-        k = cv2.waitKey(1) & 0xff
-        if k == ord('q') or k == 27:
-            break
+    cv2.imshow("tensorflow based (%d, %d)" % (w, h), image)
+    cv2.waitKey(0)
+    # if k == ord('q') or k == 27:
+    #     break
 
-    cap.release()
+    # cap.release()
